@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =========
+   BRAND TOKENS
+   ========= */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+:root {
+  /* Core brand colours */
+  --brand-primary: #2b78ff;          /* Main action blue */
+  --brand-primary-dark: #1f63d6;     /* Hover blue */
+  --brand-navy: #0a1a2f;             /* Header / strong text */
+  --brand-soft-blue: #f2f6fc;        /* Soft page background */
+
+  /* A1 design system tokens */
+  --section-muted: #f4f7fb;          /* Soft section background */
+  --page-bg: #f2f6fc;                /* Default UI background */
+
+  /* Text & base colours */
+  --background: #ffffff;
+  --foreground: #0f172a;             /* Slate-900 equivalent */
+
+  /* Fonts from next/font */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+
+/* =========
+   DARK MODE SUPPORT (Automatic)
+   ========= */
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #020617;   /* Near slate-950 */
+    --foreground: #e5e7eb;   /* Slate-200 */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========
+   GLOBAL BASE
+   ========= */
+
+html {
+  scroll-behavior: smooth;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--page-bg);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Better rendering */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========
+   MOTION GRADIENT (Hero effect)
+   ========= */
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 300% 300%;
+  animation: gradientMove 18s ease infinite;
+}
+
+/* =========
+   PARALLAX SAFETY (prevents glitches)
+   ========= */
+.parallax-bg {
+  pointer-events: none;
+  user-select: none;
+}
+
+.slider-smooth {
+  will-change: transform, opacity;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+.input {
+  @apply px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 
+         text-slate-900 placeholder:text-slate-400 
+         focus:ring-2 focus:ring-sky-600 outline-none transition;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.45s ease-out forwards;
+}
+
